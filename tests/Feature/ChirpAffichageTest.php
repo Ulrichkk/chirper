@@ -7,7 +7,7 @@ use App\Models\Chirp;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ChirpDisplayTest extends TestCase
+class ChirpAffichageTest extends TestCase
 {
     use RefreshDatabase;
 
