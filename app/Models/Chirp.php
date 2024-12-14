@@ -13,6 +13,7 @@ class Chirp extends Model
     protected $fillable = [
         'user_id',
         'message',
+        'likes',
     ];
     protected $dispatchesEvents = [
         'created' => ChirpCreated::class,
@@ -22,5 +23,15 @@ class Chirp extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'chirp_user_likes');
+    }
+
+    public function isLikedBy(User $user): bool
+    {
+        return $this->likedByUsers()->where('user_id', $user->id)->exists();
     }
 }

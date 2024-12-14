@@ -91,4 +91,17 @@ class ChirpController extends Controller
  
         return redirect(route('chirps.index'));
     }
+
+    public function like(Chirp $chirp): View
+    {
+        $user = auth()->user();
+
+        if ($chirp->isLikedBy($user)) {
+            return response()->json(['message' => 'You have already liked this chirp.'], 403);
+        }
+    
+        $chirp->likedByUsers()->attach($user->id);
+        return response()->json(['message' => 'Chirp liked successfully!', 'likes' => $chirp->likedByUsers()->count()]);
+    }
+
 }
